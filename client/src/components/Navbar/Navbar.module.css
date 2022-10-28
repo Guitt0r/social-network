@@ -1,0 +1,14 @@
+.navbar {
+    grid-area: navbar;
+    background-color: papayawhip;
+    border: 1px solid salmon;
+}
+
+.navLink a {
+    color: black;
+    text-decoration: none;
+}
+
+.navLink a.active {
+    font-style: italic;
+}

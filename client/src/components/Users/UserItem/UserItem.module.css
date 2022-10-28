@@ -1,0 +1,13 @@
+.userItem{
+    display: grid;
+    justify-content: start;
+    justify-items: center;
+    margin: 10px;
+}
+.userAvatar img{
+    object-fit: cover;
+    width: 150px;
+    height: 150px;
+    border-radius: 100%;
+    background-color: white;
+}

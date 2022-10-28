@@ -1,0 +1,11 @@
+.header{
+    position: sticky;
+    top: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    grid-area: header;
+    background-color: papayawhip;
+    border: 1px solid salmon;
+}

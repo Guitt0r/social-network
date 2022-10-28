@@ -1,0 +1,60 @@
+.post {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 40%;
+    border: 1px solid crimson;
+    border-radius: 10px;
+    margin: 10px;
+}
+
+.postInfo {
+    display: flex;
+    padding: 5px;
+    align-items: start;
+
+}
+
+.text {
+    margin: 25px 0 0 4px;
+}
+
+.updatedMark {
+    position: absolute;
+    margin-left: 70px;
+    cursor: help;
+    font-style: italic;
+    font-size: 12px;
+    text-decoration: underline;
+}
+
+.postInfo img {
+    object-fit: cover;
+    width: 65px;
+    height: 65px;
+    border-radius: 100%;
+    border: 2px solid black;
+    background-color: white;
+}
+
+.postOwnerActions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+.likesWrapper{
+    text-align: center;
+}
+.likesWrapper img {
+    width: 20px;
+    cursor: pointer;
+}
+
+.editWrapper img {
+    width: 30px;
+    cursor: pointer;
+}
+
+.deleteWrapper img {
+    width: 30px;
+    cursor: pointer;
+}
