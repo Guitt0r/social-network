@@ -2,7 +2,7 @@
 
 Social network write on the MERN stack
 
-##Features:
+## Features:
 - Authorization
 - Editing profile
 - Uploading photo
