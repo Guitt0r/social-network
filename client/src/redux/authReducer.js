@@ -61,7 +61,7 @@ export const logout = () => async (dispatch) => {
     try {
         const res = await authAPI.logout()
         if (res.resultCode === 0)
-            dispatch(setUserDataSuccess({}, false))
+            dispatch(setUserDataSuccess({id: null, email: null, username: null}, false))
     } catch (e) {
         toast.error(e.response.data.message)
     }
