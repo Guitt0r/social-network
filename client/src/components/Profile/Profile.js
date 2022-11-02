@@ -7,8 +7,8 @@ import {getUsersPosts} from "../../redux/postReducer";
 import MyPosts from "./MyPosts/MyPosts";
 
 const Profile = () => {
+    debugger
     const profile = useSelector(state => state.profilePage.profile)
-    const isAuth = useSelector(state => state.auth.isAuth)
     const authUserId = useSelector(state => state.auth.id)
     const dispatch = useDispatch()
     const getProfileWithPosts = (id) => {
@@ -23,12 +23,12 @@ const Profile = () => {
             getProfileWithPosts(authUserId)
         }
     }, [id])
-    if (!isAuth && !id) return <Navigate to='/login'/>
+    if (!authUserId && !id) return <Navigate to='/login'/>
     if (!profile) return <div>loading</div>//TODO: make preloader
     return (
         <div>
             <ProfileInfo isOwner={!id} profile={profile}/>
-            <MyPosts isOwner={!id} profilePhoto={profile.photo} authUserId={authUserId}/>
+            <MyPosts isOwner={!id} profilePhoto={profile.photo}/>
         </div>
     )
 }
