@@ -1,9 +1,12 @@
-import {connect} from "react-redux";
-import {logout} from "../../redux/authReducer";
+import {useDispatch, useSelector} from "react-redux";
 import {NavLink} from "react-router-dom";
 import s from './Header.module.css'
+import {logout} from "../../redux/authReducer";
 
-const Header = ({username, isAuth, logout}) => {
+const Header = () => {
+    const username = useSelector(state => state.auth.username)
+    const isAuth = useSelector(state => state.auth.isAuth)
+    const dispatch = useDispatch()
     return (
         <div className={s.header}>
             <div>
@@ -14,7 +17,7 @@ const Header = ({username, isAuth, logout}) => {
                     ?
                     <div>
                         Hello,{username} |
-                        <button onClick={logout}>Logout</button>
+                        <button onClick={() => dispatch(logout())}>Logout</button>
                     </div>
                     :
                     <div>
@@ -28,9 +31,5 @@ const Header = ({username, isAuth, logout}) => {
     )
 }
 
-const mapStateToProps = (state) => ({
-    username: state.auth.username,
-    isAuth: state.auth.isAuth,
-})
 
-export default connect(mapStateToProps, {logout})(Header)
+export default Header

@@ -1,26 +1,22 @@
 import {Navigate, NavLink} from "react-router-dom";
-import {connect} from "react-redux";
 import {register} from "../../redux/authReducer";
 import RegisterForm from "./RegisterForm";
-import {ToastContainer} from "react-toastify";
+import {useDispatch, useSelector} from "react-redux";
 
-const Register = ({isAuth, register}) => {
+const Register = () => {
+    const isAuth = useSelector(state => state.auth.isAuth)
+    const dispatch = useDispatch()
     if (isAuth) return <Navigate to='/profile'/>
     return (
         <div>
             <h1>Register</h1>
-            <RegisterForm registerNewUser={register}/>
+            <RegisterForm registerNewUser={(user) => dispatch(register(user))}/>
             <div>
                 Already have an account yet?
                 <NavLink to='/login'>Login now!</NavLink>
-                <ToastContainer/>
             </div>
         </div>
     )
 }
 
-const mapStateToProps = (state) => ({
-    isAuth: state.auth.isAuth,
-})
-
-export default connect(mapStateToProps, {register})(Register)
+export default Register

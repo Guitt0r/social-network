@@ -1,8 +1,11 @@
 import Post from "./Post/Post";
 import AddPostForm from "./AddPostForm/AddPostForm";
-import {deletePost} from "../../../redux/postReducer";
+import {useDispatch, useSelector} from "react-redux";
+import {createPost} from "../../../redux/postReducer";
 
-const MyPosts = ({isOwner, posts, createPost, updatePost, likePost,deletePost, profilePhoto, authUserId}) => {
+const MyPosts = ({isOwner, profilePhoto, authUserId}) => {
+    const posts = useSelector(state => state.post.posts)
+    const dispatch = useDispatch()
     const postElement = posts.map(post => <Post key={post._id}
                                                 usersWhoLikes={post.usersWhoLikes}
                                                 id={post._id}
@@ -11,19 +14,16 @@ const MyPosts = ({isOwner, posts, createPost, updatePost, likePost,deletePost, p
                                                 isUpdated={post.isUpdated}
                                                 isOwner={isOwner}
                                                 profilePhoto={profilePhoto}
-                                                updatePost={updatePost}
-                                                likePost={likePost}
-                                                deletePost={deletePost}
                                                 authUserId={authUserId}/>)
     return (
         <div>
             <div>
                 <h3>Posts:</h3>
                 {postElement}
-                {postElement.length ===0 && <span>No posts yet</span>}
+                {postElement.length === 0 && <span>No posts yet</span>}
             </div>
             <div>
-                {isOwner && <AddPostForm createPost={createPost}/>}
+                {isOwner && <AddPostForm createPost={(post) => dispatch(createPost(post))}/>}
             </div>
         </div>
     )

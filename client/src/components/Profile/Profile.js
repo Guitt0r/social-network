@@ -1,42 +1,36 @@
-import {connect} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {useEffect} from "react";
 import {Navigate, useParams} from "react-router-dom";
-import {getProfile, savePhoto, saveProfile} from "../../redux/profileReducer";
+import {getProfile} from "../../redux/profileReducer";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import {getUsersPosts} from "../../redux/postReducer";
-import MyPostsContainer from "./MyPosts/MyPostsContainer";
+import MyPosts from "./MyPosts/MyPosts";
 
-const Profile = ({isAuth, getProfile, authUserId, profile, saveProfile, savePhoto, getUsersPosts}) => {
+const Profile = () => {
+    const profile = useSelector(state => state.profilePage.profile)
+    const isAuth = useSelector(state => state.auth.isAuth)
+    const authUserId = useSelector(state => state.auth.id)
+    const dispatch = useDispatch()
+    const getProfileWithPosts = (id) => {
+        dispatch(getProfile(id))
+        dispatch(getUsersPosts(id))
+    }
     let {id} = useParams()
     useEffect(() => {
         if (id) {
-            getProfile(id)
-            getUsersPosts(id)
+            getProfileWithPosts(id)
         } else if (authUserId) {
-            getProfile(authUserId)
-            getUsersPosts(authUserId)
+            getProfileWithPosts(authUserId)
         }
     }, [id])
     if (!isAuth && !id) return <Navigate to='/login'/>
     if (!profile) return <div>loading</div>//TODO: make preloader
     return (
         <div>
-            <ProfileInfo isOwner={!id} profile={profile} saveProfile={saveProfile} savePhoto={savePhoto}/>
-            <MyPostsContainer isOwner={!id} profilePhoto={profile.photo} authUserId={authUserId}/>
+            <ProfileInfo isOwner={!id} profile={profile}/>
+            <MyPosts isOwner={!id} profilePhoto={profile.photo} authUserId={authUserId}/>
         </div>
     )
 }
-const mapStateToProps = (state) => ({
-    profile: state.profilePage.profile,
-    isAuth: state.auth.isAuth,
-    authUserId: state.auth.id,
-    posts: state.post.posts
-})
 
-export default connect(mapStateToProps, {
-    getProfile,
-    saveProfile,
-    savePhoto,
-    getUsersPosts
-
-})(Profile)
+export default Profile

@@ -1,5 +1,5 @@
 import './App.css'
-import {connect} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {initializeApp} from "./redux/appReducer";
 import {useEffect} from "react";
 import Header from "./components/Header/Header";
@@ -9,10 +9,13 @@ import Profile from "./components/Profile/Profile";
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
 import Users from "./components/Users/Users";
+import {ToastContainer} from "react-toastify";
 
-const App = ({initializeApp, isInitialize}) => {
+const App = () => {
+    const isInitialize = useSelector(state => state.app.isInitialize)
+    const dispatch = useDispatch()
     useEffect(() => {
-        initializeApp()
+        dispatch(initializeApp())
     }, [])
     if (!isInitialize) return <div>Loading...</div>//TODO:make preloader
     return (
@@ -28,12 +31,9 @@ const App = ({initializeApp, isInitialize}) => {
                     <Route path='/register' element={<Register/>}/>
                 </Routes>
             </div>
+            <ToastContainer position={"top-center"}/>
         </div>
     )
 }
 
-const mapStateToProps = (state) => ({
-    isInitialize: state.app.isInitialize
-})
-
-export default connect(mapStateToProps, {initializeApp})(App)
+export default App
