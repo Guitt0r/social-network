@@ -3,9 +3,8 @@ const {Schema, model} = mongoose
 
 const postSchema = new Schema({
         text: {type: String, required: true},
-        likesCount: {type: Number, default: 0},
         isUpdated: {type: Boolean, default: false},
-        usersWhoLikes: [{type: String}],
+        likes: [{type: Schema.Types.ObjectId, ref: 'User'}],
         owner: {type: Schema.Types.ObjectId, ref: 'User'}
     }
 )

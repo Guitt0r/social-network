@@ -1,6 +1,6 @@
 import s from './Post.module.css'
-import unlikeIcon from '../../../../assets/unlikeIcon.png'
-import likeIcon from '../../../../assets/likeIcon.png'
+import unlikedIcon from '../../../../assets/unlikeIcon.png'
+import likedIcon from '../../../../assets/likeIcon.png'
 import deleteIcon from '../../../../assets/deleteIcon.png'
 import editIcon from '../../../../assets/editIcon.png'
 import {useState} from "react";
@@ -8,7 +8,7 @@ import EditPostForm from "./EditPostForm/EditPostForm";
 import {useDispatch} from "react-redux";
 import {deletePost, likePost, updatePost} from "../../../../redux/postReducer";
 
-const Post = ({id, text, likesCount, isUpdated, isOwner, profilePhoto, usersWhoLikes, authUserId}) => {
+const Post = ({id, text, likesCount, isUpdated, isLiked, isOwner, profilePhoto}) => {
     const dispatch = useDispatch()
     const [editMode, setEditMode] = useState(false)
     const activateEditMode = () => {
@@ -43,11 +43,7 @@ const Post = ({id, text, likesCount, isUpdated, isOwner, profilePhoto, usersWhoL
             </div>
             <div>
                 <div className={s.likesWrapper}>
-                    <img onClick={onLike} src={
-                        usersWhoLikes.some(id => id === authUserId)
-                            ? likeIcon
-                            : unlikeIcon
-                    } alt='like/unlike'/>
+                    <img onClick={onLike} src={isLiked ? likedIcon : unlikedIcon} alt='like/unlike'/>
                     <div>
                         likes:{likesCount}
                     </div>
