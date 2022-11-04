@@ -3,17 +3,17 @@ import AddPostForm from "./AddPostForm/AddPostForm";
 import {useDispatch, useSelector} from "react-redux";
 import {createPost} from "../../../redux/postReducer";
 
-const MyPosts = ({isOwner, profilePhoto}) => {
+const MyPosts = ({isOwner, profilePhoto,authUserId}) => {
     const posts = useSelector(state => state.post.posts)
     const dispatch = useDispatch()
     const postElement = posts.map(post => <Post key={post._id}
                                                 id={post._id}
                                                 text={post.text}
-                                                likesCount={post.likesCount}
                                                 isUpdated={post.isUpdated}
-                                                isLiked={post.isLiked}
+                                                likes={post.likes}
                                                 isOwner={isOwner}
-                                                profilePhoto={profilePhoto}/>)
+                                                profilePhoto={profilePhoto}
+                                                authUserId={authUserId}/>)
     return (
         <div>
             <div>

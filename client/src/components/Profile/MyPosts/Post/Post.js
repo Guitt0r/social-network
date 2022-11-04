@@ -8,7 +8,7 @@ import EditPostForm from "./EditPostForm/EditPostForm";
 import {useDispatch} from "react-redux";
 import {deletePost, likePost, updatePost} from "../../../../redux/postReducer";
 
-const Post = ({id, text, likesCount, isUpdated, isLiked, isOwner, profilePhoto}) => {
+const Post = ({id, text, likes, isUpdated, isOwner, profilePhoto, authUserId}) => {
     const dispatch = useDispatch()
     const [editMode, setEditMode] = useState(false)
     const activateEditMode = () => {
@@ -43,9 +43,9 @@ const Post = ({id, text, likesCount, isUpdated, isLiked, isOwner, profilePhoto})
             </div>
             <div>
                 <div className={s.likesWrapper}>
-                    <img onClick={onLike} src={isLiked ? likedIcon : unlikedIcon} alt='like/unlike'/>
+                    <img onClick={onLike} src={likes.includes(authUserId) ? likedIcon : unlikedIcon} alt='like/unlike'/>
                     <div>
-                        likes:{likesCount}
+                        likes:{likes.length}
                     </div>
                 </div>
                 {isOwner &&

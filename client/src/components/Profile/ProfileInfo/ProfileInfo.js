@@ -4,7 +4,7 @@ import EditProfileInfoDataForm from "./ProfileInfoData/EditProfileInfoDataForm";
 import defaultAvatar from '../../../assets/dafaultAvatar.png'
 import s from './ProfileInfo.module.css'
 import {useDispatch} from "react-redux";
-import {savePhoto, saveProfile} from "../../../redux/profileReducer";
+import {saveUserPhoto, saveUserProfile} from "../../../redux/usersReducer";
 
 const ProfileInfo = ({isOwner, profile}) => {
     const dispatch = useDispatch()
@@ -12,13 +12,13 @@ const ProfileInfo = ({isOwner, profile}) => {
     const activateEditMode = () => {
         setEditMode(true)
     }
-    const deactivateEditMode = (data) => {
+    const deactivateEditMode = (profile) => {
         setEditMode(false)
-        dispatch(saveProfile(data))
+        dispatch(saveUserProfile(profile))
     }
 
     const onPhotoSelected = (e) => {
-        dispatch(savePhoto(e.target.files[0]))
+        dispatch(saveUserPhoto(e.target.files[0]))
     }
 
     return (

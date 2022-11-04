@@ -1,4 +1,4 @@
-import {authAPI} from "../api/api";
+import {authAPI} from "../api/authAPI";
 import {toast} from "react-toastify";
 
 const SET_USER_DATA_SUCCESS = 'auth/SET_USER_DATA_SUCCESS'
@@ -14,7 +14,9 @@ export const authReducer = (state = initialState, action) => {
         case SET_USER_DATA_SUCCESS:
             return {
                 ...state,
-                ...action.payload,
+                id: action.payload._id,
+                email: action.payload.email,
+                username: action.payload.username,
                 isAuth: action.isAuth,
             }
         default:
@@ -29,7 +31,7 @@ export const getUserData = () => async (dispatch) => {
         const res = await authAPI.me()
         //if user is auth,set data
         if (res.resultCode === 0)
-            dispatch(setUserDataSuccess(res.data, true))
+            dispatch(setUserDataSuccess(res.user, true))
     } catch (e) {
         toast.error(e.response.data.message)
     }
@@ -38,9 +40,8 @@ export const getUserData = () => async (dispatch) => {
 export const register = (data) => async (dispatch) => {
     try {
         const {email, username, password} = data
-        const res = await authAPI.register(email, username, password)
-        if (res.resultCode === 0)
-            dispatch(getUserData())
+        await authAPI.register(email, username, password)
+        dispatch(getUserData())
     } catch (e) {
         toast.error(e.response.data.message)
     }
@@ -49,9 +50,8 @@ export const register = (data) => async (dispatch) => {
 export const login = (data) => async (dispatch) => {
     try {
         const {email, password} = data
-        const res = await authAPI.login(email, password)
-        if (res.resultCode === 0)
-            dispatch(getUserData())
+        await authAPI.login(email, password)
+        dispatch(getUserData())
     } catch (e) {
         toast.error(e.response.data.message)
     }
@@ -59,9 +59,8 @@ export const login = (data) => async (dispatch) => {
 //logout
 export const logout = () => async (dispatch) => {
     try {
-        const res = await authAPI.logout()
-        if (res.resultCode === 0)
-            dispatch(setUserDataSuccess({id: null, email: null, username: null}, false))
+        await authAPI.logout()
+        dispatch(setUserDataSuccess({id: null, email: null, username: null}, false))
     } catch (e) {
         toast.error(e.response.data.message)
     }

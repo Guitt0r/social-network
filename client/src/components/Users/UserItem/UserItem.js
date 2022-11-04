@@ -1,8 +1,12 @@
 import defaultAvatar from '../../../assets/dafaultAvatar.png'
 import {NavLink} from "react-router-dom";
 import s from './UserItem.module.css'
+import {useDispatch, useSelector} from "react-redux";
+import {toggleFollowUser} from "../../../redux/usersReducer";
 
-const UserItem = ({id, fullName, photo}) => {
+const UserItem = ({id, username, photo, followers}) => {
+    const authUserId = useSelector(state => state.auth.id)
+    const dispatch = useDispatch()
     return (
         <div className={s.userItem}>
             <div className={s.userAvatar}>
@@ -11,7 +15,15 @@ const UserItem = ({id, fullName, photo}) => {
                 </NavLink>
             </div>
             <div>
-                {fullName}
+                {username}
+            </div>
+            <div>
+                <button onClick={() => dispatch(toggleFollowUser(id))}>
+                    {followers.includes(authUserId)
+                        ? `unfollow`
+                        : `follow`
+                    }
+                </button>
             </div>
         </div>
     )

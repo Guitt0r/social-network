@@ -6,6 +6,7 @@ const postSchema = new Schema({
         isUpdated: {type: Boolean, default: false},
         likes: [{type: Schema.Types.ObjectId, ref: 'User'}],
         owner: {type: Schema.Types.ObjectId, ref: 'User'}
-    }
+    },
+    {timestamps: true}
 )
 module.exports = model('Post', postSchema)

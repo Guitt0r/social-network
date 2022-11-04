@@ -1,5 +1,4 @@
 import {getUserData} from "./authReducer";
-import {toast} from "react-toastify";
 
 const SET_INITIALIZE_SUCCESS = 'auth/SET_INITIALIZE_SUCCESS'
 
@@ -18,7 +17,7 @@ export const appReducer = (state = initialState, action) => {
     }
 }
 //set isInitialize to true, if success
-const setInitializeSuccess = () => ({type: SET_INITIALIZE_SUCCESS})
+export const setInitializeSuccess = () => ({type: SET_INITIALIZE_SUCCESS})
 
 //wait for browser get user data(isAuth etc.), then initialize app
 export const initializeApp = () => async (dispatch) => {
@@ -26,6 +25,6 @@ export const initializeApp = () => async (dispatch) => {
         await dispatch(getUserData())
         dispatch(setInitializeSuccess())
     } catch (e) {
-        toast.error(e.response.data.message)
+        //toast.error(e.response.data.message)
     }
 }

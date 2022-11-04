@@ -9,7 +9,7 @@ class FileService {
             await file.mv(filePath)
             return 'http://localhost:5000/static/'+fileName
         } catch (e) {
-            throw Error(e.message)
+            return null
         }
     }
 }

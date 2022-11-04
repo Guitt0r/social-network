@@ -1,26 +1,20 @@
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect} from "react";
 import {Navigate, useParams} from "react-router-dom";
-import {getProfile} from "../../redux/profileReducer";
+import {getUserProfile} from "../../redux/usersReducer";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
-import {getUsersPosts} from "../../redux/postReducer";
 import MyPosts from "./MyPosts/MyPosts";
 
 const Profile = () => {
-    debugger
-    const profile = useSelector(state => state.profilePage.profile)
+    const profile = useSelector(state => state.user.userProfile)
     const authUserId = useSelector(state => state.auth.id)
     const dispatch = useDispatch()
-    const getProfileWithPosts = (id) => {
-        dispatch(getProfile(id))
-        dispatch(getUsersPosts(id))
-    }
     let {id} = useParams()
     useEffect(() => {
         if (id) {
-            getProfileWithPosts(id)
+            dispatch(getUserProfile(id))
         } else if (authUserId) {
-            getProfileWithPosts(authUserId)
+            dispatch(getUserProfile(authUserId))
         }
     }, [id])
     if (!authUserId && !id) return <Navigate to='/login'/>
@@ -28,7 +22,7 @@ const Profile = () => {
     return (
         <div>
             <ProfileInfo isOwner={!id} profile={profile}/>
-            <MyPosts isOwner={!id} profilePhoto={profile.photo}/>
+            <MyPosts isOwner={!id} profilePhoto={profile.photo} authUserId={authUserId}/>
         </div>
     )
 }

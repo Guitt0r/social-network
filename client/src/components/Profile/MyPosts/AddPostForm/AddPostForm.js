@@ -1,7 +1,7 @@
 import {useForm} from "react-hook-form";
 
 const AddPostForm = ({createPost}) => {
-    const {reset, register, handleSubmit, formState: {errors, isValid}} = useForm();
+    const {reset, register, handleSubmit, formState: {errors}} = useForm();
     //send data to server and check for errors
     const onSubmit = async (data) => {
         await createPost(data.text)
