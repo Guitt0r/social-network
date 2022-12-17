@@ -1,7 +1,7 @@
-const mongoose = require('mongoose')
-const {Schema, model} = mongoose
+import {Schema, model} from 'mongoose'
+import {IPost} from "../types/IPost";
 
-const postSchema = new Schema({
+const postSchema = new Schema<IPost>({
         text: {type: String, required: true},
         isUpdated: {type: Boolean, default: false},
         likes: [{type: Schema.Types.ObjectId, ref: 'User'}],
@@ -9,4 +9,5 @@ const postSchema = new Schema({
     },
     {timestamps: true}
 )
-module.exports = model('Post', postSchema)
+const Post = model<IPost>('Post', postSchema)
+export default Post

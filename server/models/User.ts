@@ -1,7 +1,7 @@
-const mongoose = require('mongoose')
-const {Schema, model} = mongoose
+import {Schema, model} from 'mongoose'
+import {IUser} from "../types/IUser";
 
-const userSchema = new Schema({
+const userSchema = new Schema<IUser>({
         email: {type: String, required: true},
         username: {type: String, required: true},
         password: {type: String, required: true},
@@ -21,4 +21,5 @@ const userSchema = new Schema({
     },
     {timestamps: true}
 )
-module.exports = model('User', userSchema)
+const User = model<IUser>('User', userSchema)
+export default User
