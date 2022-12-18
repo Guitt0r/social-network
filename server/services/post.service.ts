@@ -8,7 +8,7 @@ class PostService {
     }
 
     async update(body: IPost, postId: string) {
-        const updatedPost = await Post.findByIdAndUpdate(postId, {...body,isUpdated:true}, {new: true})
+        const updatedPost = await Post.findByIdAndUpdate(postId, {...body, isUpdated: true}, {new: true})
         return {statusCode: 0, post: updatedPost}
     }
 
@@ -29,6 +29,16 @@ class PostService {
 
     async getById(postId: string) {
         const post = await Post.findById(postId)
+        return {statusCode: 0, post: post}
+    }
+
+    async like(currentUserId: string, postId: string) {
+        const post = await Post.findByIdAndUpdate(postId, {$addToSet: {likes: currentUserId}}, {new: true})
+        return {statusCode: 0, post: post}
+    }
+
+    async unlike(currentUserId: string, postId: string) {
+        const post = await Post.findByIdAndUpdate(postId, {$pull: {likes: currentUserId}}, {new: true})
         return {statusCode: 0, post: post}
     }
 }

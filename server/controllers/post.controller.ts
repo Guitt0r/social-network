@@ -1,13 +1,12 @@
 import PostService from "../services/post.service";
 import {Request, Response} from "express";
 import {IPostQuery} from "../types/IPost";
-import {IAuthRequest} from "../types/IAuthRequest";
 
 class PostController {
     constructor(private postService: PostService) {
     }
 
-    async create(_req: IAuthRequest, res: Response) {
+    async create(_req: Request, res: Response) {
         return this.postService.create(_req.body, _req.user)
     }
 
@@ -24,6 +23,12 @@ class PostController {
     }
     async getOne(_req: Request, res: Response) {
         return this.postService.getById(_req.params.id)
+    }
+    async like(_req: Request, res: Response) {
+        return this.postService.like(_req.user,_req.params.id)
+    }
+    async unlike(_req: Request, res: Response) {
+        return this.postService.unlike(_req.user,_req.params.id)
     }
 }
 

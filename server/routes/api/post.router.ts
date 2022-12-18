@@ -35,5 +35,17 @@ postRouter.delete('/:id',
     genericValidation(postSchema),
     tryCatch(PostController.delete.bind(PostController))
 )
+postRouter.put('/like/:id',
+    protect,
+    isExist(Post),
+    genericValidation(postSchema),
+    tryCatch(PostController.like.bind(PostController))
+)
+postRouter.put('/unlike/:id',
+    protect,
+    isExist(Post),
+    genericValidation(postSchema),
+    tryCatch(PostController.unlike.bind(PostController))
+)
 
 export default postRouter
