@@ -10,10 +10,12 @@ import {protect} from "../../middlewares/auth-protect.middleware";
 const postRouter = Router()
 
 postRouter.get('/',
+    protect,
     genericValidation(postSchema),
     tryCatch(PostController.getAll.bind(PostController))
 )
 postRouter.get('/post/:id',
+    protect,
     isExist(Post),
     genericValidation(postSchema),
     tryCatch(PostController.getOne.bind(PostController))

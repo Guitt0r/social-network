@@ -11,9 +11,11 @@ import {upload} from "../../middlewares/multer.middleware";
 const userRouter = Router()
 
 userRouter.get('/',
+    protect,
     tryCatch(UserController.getAll.bind(UserController))
 )
 userRouter.get('/user/:id',
+    protect,
     isExist(User),
     tryCatch(UserController.getOne.bind(UserController))
 )
