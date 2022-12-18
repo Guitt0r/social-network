@@ -9,17 +9,12 @@ class UserService {
         return {statusCode: 0, user: updatedUser}
     }
 
-    async delete(userId: string) {
-        const deletedUser = await User.findByIdAndDelete(userId)
-        return {statusCode: 0, user: deletedUser}
-    }
-
     async getAll(query?: IUserQuery, userId?: string) {
-        if (!query || !query.followings) {
+        if (!query || Object.keys(query).length === 0 || !query.followings) {
             const users = await User.find()
             return {statusCode: 0, users: users}
         } else {
-            const users = await User.find({followings: {$in: userId}})
+            const users = await User.find({following: {$in: userId}})
             return {statusCode: 0, users: users}
         }
 

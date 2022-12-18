@@ -21,5 +21,5 @@ export interface IUser extends Document {
 }
 
 export interface IUserQuery {
-    followings:boolean
+    followings: boolean
 }
