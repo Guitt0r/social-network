@@ -12,6 +12,10 @@ class AuthController {
     async login(_req: Request, res: Response) {
         return this.authService.login(_req.body)
     }
+
+    async deleteAccount(_req: Request, res: Response) {
+        return this.authService.deleteAccount(_req.user)
+    }
 }
 
 const authController = new AuthController(new AuthService())

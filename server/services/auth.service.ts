@@ -27,6 +27,11 @@ class AuthService {
         const {password, ...info} = user._doc
         return {statusCode: 0, user: info, accessToken: token}
     }
+
+    async deleteAccount(userId: string) {
+        const deletedUser = await User.findByIdAndDelete(userId)
+        return {statusCode: 0, user: deletedUser}
+    }
 }
 
 export default AuthService
